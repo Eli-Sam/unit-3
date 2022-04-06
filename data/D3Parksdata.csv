@@ -1,10 +1,7 @@
-﻿State,Operating expenditures per acre,Capital expenditures per acre,Acres,Attendance (Visits),Revenue
-"Alabama
-",862,11,48357,4815408,38194560
-"Arizona
-",346,89,64413,3189830,20362172
-"Arkansas
-",1160,327,54680,7107728,28388852
+﻿State,Operating_expenditures,Capital_expenditures,Acres,Attendance,Revenue
+Alabama,862,11,48357,4815408,38194560
+Arizona,346,89,64413,3189830,20362172
+Arkansas,1160,327,54680,7107728,28388852
 California,375,22,1647485,81043233,132153792
 Colorado,40,13,1579521,14777034,85245744
 Connecticut,78,17,209677,9133829,5229910
