@@ -30,8 +30,7 @@ var colorClasses = [
   "#006837"
 ];
 //create color scale generator
-var colorScale = d3.scaleThreshold()
-    .range(colorClasses);
+var colorScale
 
 //begin script when window loads
 window.onload = setMap();
@@ -87,9 +86,9 @@ function setMap(){
       usStates = joinData(usStates, csvData);
 
 
-      var colorScale =  changecolorscale(colorexpr,csvData);
-      createcolorDropdown(csvData);
+      colorScale =  changecolorscale(colorexpr,csvData);
       createDropdown(csvData);
+      createcolorDropdown(csvData);
       setEnumerationUnits(usStates, map, path,colorScale);
       setChart(csvData, colorScale);
 
@@ -100,9 +99,12 @@ function setMap(){
 };
 function changecolorscale(attribute,data){
   //Color Scale Functions
+  colorexpr=attribute
   //Natural Breaks color scale generator
-  if(attribute = "NaturalBreaksScale") {
+  if(colorexpr = "NaturalBreaksScale") {
           //build array of all values of the expressed attribute
+          var colorScale = d3.scaleThreshold()
+          .range(colorClasses);
           var domainArray = [];
           for (var i=0; i<data.length; i++){
               var val = parseFloat(data[i][expressed]);
@@ -121,8 +123,10 @@ function changecolorscale(attribute,data){
           //assign array of last 4 cluster minimums as domain
           colorScale.domain(domainArray);
           return colorScale;
-        } else if (attribute = "EqualIntervalScale") {
+        } else if (colorexpr = "EqualIntervalScale") {
       //build two-value array of minimum and maximum expressed attribute values
+      var colorScale = d3.scaleQuantile()
+      .range(colorClasses);
       var minmax = [
        d3.min(data, function(d) { return parseFloat(d[expressed]); }),
         d3.max(data, function(d) { return parseFloat(d[expressed]); })
@@ -131,8 +135,10 @@ function changecolorscale(attribute,data){
       colorScale.domain(minmax);
       return colorScale;
     }  //quantile color scale generator
-    else if (attribute = "QuantileScal") {
+    else if (colorexpr = "QuantileScal") {
       //build array of all values of the expressed attribute
+      var colorScale = d3.scaleQuantile()
+      .range(colorClasses);
       var domainArray = [];
       for (var i=0; i<data.length; i++){
           var val = parseFloat(data[i][expressed]);
@@ -279,7 +285,7 @@ function changeAttribute(attribute, csvData){
         .range([463, 0])
         .domain([0, maxval]);
     //recreate the color scale
-    var colorScale =  changecolorscale(attribute,csvData);
+    colorScale =  changecolorscale(attribute,csvData);
     //create vertical axis generator
     var yAxis = d3.axisLeft()
         .scale(yScale);
