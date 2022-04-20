@@ -85,7 +85,7 @@ function setMap(){
 
       usStates = joinData(usStates, csvData);
 
-
+      // Call all the functions in below
       colorScale =  changecolorscale(colorexpr,csvData);
       createDropdown(csvData);
       createcolorDropdown(csvData);
@@ -215,6 +215,7 @@ function joinData(usStates, csvData){
   };
     return usStates;
 };
+//Setting the enumeration units
 function setEnumerationUnits(usStates, map, path, colorScale){
   var regions = map.selectAll(".regions")
       .data(usStates)
@@ -224,6 +225,7 @@ function setEnumerationUnits(usStates, map, path, colorScale){
           return "regions " + d.properties.name;
       })
       .attr("d", path)
+      // Add color Style
       .style("fill", function(d){
           var value = d.properties[expressed];
           if(value) {
@@ -232,12 +234,15 @@ function setEnumerationUnits(usStates, map, path, colorScale){
               return "#ccc";
           }
         })
+        // Add the highlight function on mouseover
         .on("mouseover", function(event, d){
       highlight(d.properties);
     })
+    // Remove the highlight function on mouseout
     .on("mouseout", function(event, d){
         dehighlight(d.properties);
       })
+      // Add the label
       .on("mousemove", moveLabel);
       var desc = regions.append("desc")
         .text('{"stroke": "#000", "stroke-width": "0.5px"}');
@@ -413,15 +418,17 @@ function highlight(props){
         .style("stroke-width", "2");
     setLabel(props)
 };
+// De highlight funtion
 function dehighlight(props){
     var selected = d3.selectAll("." + props.name)
         .style("stroke", function(){
             return getStyle(this, "stroke")
         })
+        // Change the Style
         .style("stroke-width", function(){
             return getStyle(this, "stroke-width")
         });
-
+// Get the style of the object for the outline
     function getStyle(element, styleName){
         var styleText = d3.select(element)
             .select("desc")
